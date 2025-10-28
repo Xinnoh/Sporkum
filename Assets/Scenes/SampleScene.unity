@@ -633,7 +633,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1584789912}
   - {fileID: 292114183}
   - {fileID: 1661126942}
   - {fileID: 297725585}
@@ -1995,7 +1994,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &752842700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2010,9 +2009,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1454371252}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 400, y: -40}
   m_SizeDelta: {x: 800, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &752842701
@@ -3406,8 +3405,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1584789912}
   - component: {fileID: 1584789911}
-  - component: {fileID: 1584789910}
   - component: {fileID: 1584789913}
+  - component: {fileID: 1584789910}
+  - component: {fileID: 1584789914}
   m_Layer: 0
   m_Name: TestButton
   m_TagString: Untagged
@@ -3490,11 +3490,11 @@ Transform:
   m_GameObject: {fileID: 1584789908}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1005.7, y: -528.5, z: 31.642}
+  m_LocalPosition: {x: -45.700012, y: 11.5, z: 31.642}
   m_LocalScale: {x: 2.1378996, y: 2.1378996, z: 2.1378996}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 85435093}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &1584789913
 CircleCollider2D:
@@ -3531,6 +3531,28 @@ CircleCollider2D:
   m_Offset: {x: 0.0000038146973, y: 0.000008583069}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1584789914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584789908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64dfb1e01e83b547a96dda54b51a98b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueObject: {fileID: 11400000, guid: d96dfed6988afc44797bee93a499d443, type: 2}
+  events:
+  - name: Yes
+    onPickedResponse:
+      m_PersistentCalls:
+        m_Calls: []
+  - name: No
+    onPickedResponse:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1591877016
 GameObject:
   m_ObjectHideFlags: 0
@@ -4750,3 +4772,4 @@ SceneRoots:
   - {fileID: 1207099383}
   - {fileID: 462572009}
   - {fileID: 1461495565}
+  - {fileID: 1584789912}

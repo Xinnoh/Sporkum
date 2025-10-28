@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Test
   m_EditorClassIdentifier: 
   dialogue:
-  - 'Test dialogue one '
+  - Test dialogue one. Further FDHJDSJHFN DSFHKJDSHLKJFNDSHDSLFNHJDSFHKJSDNHKFJHJDSFHNHFDSHN
   - Second dialogue that works hopefully
   responses:
   - responseText: Yes
