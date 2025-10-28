@@ -19,7 +19,6 @@ public class GameStateManager : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("1");
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);

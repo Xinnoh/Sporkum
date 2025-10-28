@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     public DialogueUI DialogueUI => dialogueUI;
 
-    public IInteractable interactable {  get; set; }
+    public IInteractable Interactable {  get; set; }
 
     private void Start()
     {
@@ -21,8 +21,9 @@ public class Player : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            interactable?.Interact(this);
+            Interactable?.Interact(this);
         }
     }
+
 }
 
