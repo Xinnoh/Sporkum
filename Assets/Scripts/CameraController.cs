@@ -1,18 +1,69 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+/// <summary>
+/// Moves and rotates the camera to different preset positions depending on the current game state.
+/// Subscribes to GameStateManager to automatically update when the state changes.
+/// </summary>
+public class CameraStateController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [Header("Camera Positions")]
+    public Transform MenuCamPos;
+    public Transform RouletteCamPos;
+    public Transform DungeonCamPos;
+    public Transform CombatCamPos;
+
+    [Header("Movement Settings")]
+    public float MoveSpeed = 5f;
+
+    private Transform targetPos;
+    private Transform lastTarget;
+
     void Start()
     {
-        
+        if (GameStateManager.Instance == null)
+            return;
+
+        GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
+
+        // Initialize camera position based on current state
+        OnGameStateChanged(GameStateManager.Instance.CurrentState);
     }
 
-    // Update is called once per frame
+    void OnDisable()
+    {
+        if (GameStateManager.Instance != null)
+            GameStateManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
     void Update()
     {
-        
+        if (targetPos == null)
+            return;
+
+        transform.position = Vector3.Lerp(transform.position, targetPos.position, Time.deltaTime * MoveSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetPos.rotation, Time.deltaTime * MoveSpeed);
+    }
+
+    /// <summary>
+    /// Called whenever the GameStateManager changes state.
+    /// Sets the camera's target position.
+    /// </summary>
+    void OnGameStateChanged(GameStateType newState)
+    {
+        switch (newState)
+        {
+            case GameStateType.Menu: targetPos = MenuCamPos; break;
+            case GameStateType.Roulette: targetPos = RouletteCamPos; break;
+            case GameStateType.Dungeon: targetPos = DungeonCamPos; break;
+            case GameStateType.Combat: targetPos = CombatCamPos; break;
+            default: targetPos = null; break;
+        }
+
+        if (targetPos == null)
+            return;
+
+        transform.position = targetPos.position;
+        transform.rotation = targetPos.rotation;
+        lastTarget = targetPos;
     }
 }

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RouletteSpawner : MonoBehaviour
@@ -6,42 +8,99 @@ public class RouletteSpawner : MonoBehaviour
     [Header("Setup")]
     public RouletteTemplate template;
     public float RadiusSize = 3f;
+    public float BallSize = 1f;
     public Transform ParentTrans;
     public GameObject RouletteBallPrefab;
 
     private List<GameObject> spawnedBalls = new List<GameObject>();
-    private List<Color> randomizedOrder = new List<Color>();
+    private List<BallType> randomizedOrder = new List<BallType>();
 
-    void Start()
+    private RouletteSpinner rouletteSpinner;
+
+
+    private void Awake()
     {
-        SpawnRoulette();
+        rouletteSpinner = GetComponent<RouletteSpinner>();
     }
 
-    void SpawnRoulette()
+    void OnEnable()
     {
-        foreach (var go in spawnedBalls)
-            Destroy(go);
+        if (GameStateManager.Instance != null)
+            GameStateManager.Instance.OnGameStateChanged += OnGameStateChanged;
+    }
+
+    void OnDisable()
+    {
+        if (GameStateManager.Instance != null)
+            GameStateManager.Instance.OnGameStateChanged -= OnGameStateChanged;
+    }
+
+    void OnGameStateChanged(GameStateType newState)
+    {
+        if (newState == GameStateType.Roulette)
+            SpawnRoulette();
+        else
+            DespawnRouletteKeepOrder(true);
+    }
+
+    public void SpawnRoulette()
+    {
+        // If roulette order does not exist, make new one
+        bool rouletteListEmpty = randomizedOrder == null || randomizedOrder.Count == 0;
+
+        if (rouletteListEmpty)
+        {
+            FillRandomRouletteList();
+        }
+
+        PlaceBallsOnRoulette();
+    }
+
+    void DespawnRouletteKeepOrder(bool keepOrder)
+    {
+        foreach (var ball in spawnedBalls)
+        {
+            if(ball != null)
+                Destroy(ball);
+        }
+
         spawnedBalls.Clear();
 
-        List<(Color color, int count)> ballData = new List<(Color, int)>
+
+        if (!keepOrder)
+            EmptyRouletteList();
+    }
+
+    public void EmptyRouletteList()
+    {
+        randomizedOrder.Clear();
+    }
+
+
+    void FillRandomRouletteList()
+    {
+        List<(BallType type, int count)> ballData = new List<(BallType, int)>
         {
-            (Color.blue, template.Normal),
-            (new Color(1f, 0.5f, 0f), template.Enemy),
-            (Color.yellow, template.Treasure),
-            (Color.red, template.Trap),
-            (Color.black, template.Other),
-            (Color.green, template.Story)
+            (BallType.Normal, template.Normal),
+            (BallType.Enemy, template.Enemy),
+            (BallType.Treasure, template.Treasure),
+            (BallType.Trap, template.Trap),
+            (BallType.Other, template.Other),
+            (BallType.Story, template.Story)
         };
 
-        List<Color> allBalls = new List<Color>();
-        foreach (var (color, count) in ballData)
+        List<BallType> allBalls = new List<BallType>();
+        foreach (var (type, count) in ballData)
         {
             for (int i = 0; i < count; i++)
-                allBalls.Add(color);
+                allBalls.Add(type);
         }
 
         randomizedOrder = ShuffleList(allBalls);
+    }
 
+    void PlaceBallsOnRoulette()
+    {
         Vector3 center = ParentTrans != null ? ParentTrans.position : transform.position;
         int totalCount = randomizedOrder.Count;
 
@@ -54,16 +113,22 @@ public class RouletteSpawner : MonoBehaviour
                 0f
             );
 
-            GameObject ball = Instantiate(RouletteBallPrefab, pos, Quaternion.identity);
-            ball.transform.SetParent(ParentTrans, true);
+            GameObject ball = Instantiate(RouletteBallPrefab, pos, Quaternion.identity, ParentTrans);
+            ball.transform.localScale = Vector3.one * BallSize;
 
-            var renderer = ball.GetComponent<Renderer>();
-            if (renderer != null)
-                renderer.material.color = randomizedOrder[i];
+            var logic = ball.GetComponent<RouletteBallLogic>();
+            if (logic != null)
+                logic.Initialize(randomizedOrder[i]);
 
             spawnedBalls.Add(ball);
         }
     }
+
+    public void StartSpin()
+    {
+        rouletteSpinner.SpinWheel(spawnedBalls);
+    }
+
 
     List<T> ShuffleList<T>(List<T> list)
     {
@@ -77,4 +142,14 @@ public class RouletteSpawner : MonoBehaviour
         }
         return list;
     }
+}
+
+public enum BallType
+{
+    Normal,
+    Enemy,
+    Treasure,
+    Trap,
+    Other,
+    Story
 }

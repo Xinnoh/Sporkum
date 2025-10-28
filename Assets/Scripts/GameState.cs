@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public enum GameStateType
@@ -16,8 +15,11 @@ public class GameStateManager : MonoBehaviour
 
     public GameStateType CurrentState { get; private set; }
 
+    public event Action<GameStateType> OnGameStateChanged;
+
     void Awake()
     {
+        Debug.Log("1");
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -26,14 +28,16 @@ public class GameStateManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
         CurrentState = GameStateType.Menu;
     }
 
     public void SetState(GameStateType newState)
     {
+        if (CurrentState == newState) return;
+
         CurrentState = newState;
         Debug.Log("Game state changed to: " + newState);
+        OnGameStateChanged?.Invoke(newState);
     }
 
     public void SetMenu() => SetState(GameStateType.Menu);
