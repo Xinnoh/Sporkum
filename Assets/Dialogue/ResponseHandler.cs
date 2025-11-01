@@ -21,6 +21,7 @@ public class ResponseHandler : MonoBehaviour
     private void Start()
     {
         dialogueUI = GetComponent<DialogueUI>();
+        responseBox.gameObject.SetActive(false);
     }
 
     public void AddResponseEvents(ResponseEvent[] responseEvents)
