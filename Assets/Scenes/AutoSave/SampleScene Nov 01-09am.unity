@@ -4143,8 +4143,7 @@ MonoBehaviour:
   cardsToSpawn: 4
   cards: []
   tweenCardReturn: 0
-  otherHolder: {fileID: 1859521596}
-  partyManager: {fileID: 0}
+  partyManager: {fileID: 1461495566}
 --- !u!1 &1622784940
 GameObject:
   m_ObjectHideFlags: 0
@@ -4678,7 +4677,6 @@ MonoBehaviour:
   cardsToSpawn: 4
   cards: []
   tweenCardReturn: 0
-  otherHolder: {fileID: 0}
   partyManager: {fileID: 0}
 --- !u!1 &1831887111
 GameObject:
@@ -4871,9 +4869,8 @@ MonoBehaviour:
     type: 3}
   cardsToSpawn: 4
   cards: []
-  tweenCardReturn: 1
-  otherHolder: {fileID: 1622237520}
-  partyManager: {fileID: 1461495566}
+  tweenCardReturn: 0
+  partyManager: {fileID: 0}
 --- !u!114 &1859521597
 MonoBehaviour:
   m_ObjectHideFlags: 0

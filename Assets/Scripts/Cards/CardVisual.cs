@@ -65,9 +65,12 @@ public class CardVisual : MonoBehaviour
     private float curveRotationOffset;
     private Coroutine pressCoroutine;
 
+
     private void Start()
     {
+        transform.position = parentCard.transform.position;
         shadowDistance = visualShadow.localPosition;
+
     }
 
     public void Initialize(Card target, int index = 0)

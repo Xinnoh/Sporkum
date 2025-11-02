@@ -808,7 +808,7 @@ GameObject:
   - component: {fileID: 210739033}
   - component: {fileID: 210739032}
   m_Layer: 0
-  m_Name: StickmanSprite
+  m_Name: Stickman
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1346,51 +1346,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &470972039
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 470972041}
-  - component: {fileID: 470972040}
-  m_Layer: 0
-  m_Name: EnemyManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &470972040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470972039}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10eb0390185e32b428bb323bd0323423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  party: {fileID: 11400000, guid: c533b11a0c0d0c44aaa645b9e4df9c68, type: 2}
---- !u!4 &470972041
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 470972039}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 45.876404, y: 7.222754, z: 3.2820725}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2590,7 +2545,7 @@ GameObject:
   - component: {fileID: 939499853}
   - component: {fileID: 939499852}
   m_Layer: 0
-  m_Name: EnemySprite
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3565,7 +3520,7 @@ GameObject:
   - component: {fileID: 1461495564}
   - component: {fileID: 1461495566}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4143,8 +4098,6 @@ MonoBehaviour:
   cardsToSpawn: 4
   cards: []
   tweenCardReturn: 0
-  otherHolder: {fileID: 1859521596}
-  partyManager: {fileID: 0}
 --- !u!1 &1622784940
 GameObject:
   m_ObjectHideFlags: 0
@@ -4678,8 +4631,6 @@ MonoBehaviour:
   cardsToSpawn: 4
   cards: []
   tweenCardReturn: 0
-  otherHolder: {fileID: 0}
-  partyManager: {fileID: 0}
 --- !u!1 &1831887111
 GameObject:
   m_ObjectHideFlags: 0
@@ -4871,9 +4822,7 @@ MonoBehaviour:
     type: 3}
   cardsToSpawn: 4
   cards: []
-  tweenCardReturn: 1
-  otherHolder: {fileID: 1622237520}
-  partyManager: {fileID: 1461495566}
+  tweenCardReturn: 0
 --- !u!114 &1859521597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5412,9 +5361,8 @@ SceneRoots:
   - {fileID: 1297540481}
   - {fileID: 69932622}
   - {fileID: 605601856}
-  - {fileID: 298302469}
   - {fileID: 1461495565}
-  - {fileID: 470972041}
+  - {fileID: 298302469}
   - {fileID: 1397771408}
   - {fileID: 1591877020}
   - {fileID: 2096989789}

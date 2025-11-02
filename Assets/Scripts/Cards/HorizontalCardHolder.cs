@@ -22,6 +22,10 @@ public class HorizontalCardHolder : MonoBehaviour
     bool isCrossing = false;
     [SerializeField] private bool tweenCardReturn = true;
 
+    [SerializeField] private HorizontalCardHolder otherHolder;
+
+    public PartyManager partyManager;
+
     void Start()
     {
         for (int i = 0; i < cardsToSpawn; i++)
@@ -93,6 +97,18 @@ public class HorizontalCardHolder : MonoBehaviour
         {
             if (hoveredCard != null)
             {
+                if (otherHolder != null)
+                {
+                    int indexToRemove = hoveredCard.ParentIndex();
+                    Card cardToRemove = otherHolder.cards.FirstOrDefault(c => c.ParentIndex() == indexToRemove);
+                    if (cardToRemove != null)
+                    {
+                        Destroy(cardToRemove.transform.parent.gameObject);
+                        otherHolder.cards.Remove(cardToRemove);
+                    }
+                }
+
+
                 Destroy(hoveredCard.transform.parent.gameObject);
                 cards.Remove(hoveredCard);
 
@@ -138,6 +154,8 @@ public class HorizontalCardHolder : MonoBehaviour
 
     void Swap(int index)
     {
+        int selectedIndex = cards.IndexOf(selectedCard);
+
         isCrossing = true;
 
         Transform focusedParent = selectedCard.transform.parent;
@@ -147,6 +165,8 @@ public class HorizontalCardHolder : MonoBehaviour
         cards[index].transform.localPosition = cards[index].selected ? new Vector3(0, cards[index].selectionOffset, 0) : Vector3.zero;
         selectedCard.transform.SetParent(crossedParent);
 
+
+
         isCrossing = false;
 
         if (cards[index].cardVisual == null)
@@ -155,10 +175,49 @@ public class HorizontalCardHolder : MonoBehaviour
         bool swapIsRight = cards[index].ParentIndex() > selectedCard.ParentIndex();
         cards[index].cardVisual.Swap(swapIsRight ? -1 : 1);
 
+        
+
+        if (otherHolder != null)
+            otherHolder.ExternalSwap(selectedIndex, index);
+
+
         //Updated Visual Indexes
         foreach (Card card in cards)
         {
             card.cardVisual.UpdateIndex(transform.childCount);
+        }
+    }
+
+
+    public void ExternalSwap(int currCardIndex, int index)
+    {
+        isCrossing = true;
+
+        Card firstCard = cards[currCardIndex];
+        Card secondCard = cards[index];
+
+        Transform firstParent = firstCard.transform.parent;
+        Transform secondParent = secondCard.transform.parent;
+
+        firstCard.transform.SetParent(secondParent);
+        secondCard.transform.SetParent(firstParent);
+
+        firstCard.transform.localPosition = firstCard.selected ? new Vector3(0, firstCard.selectionOffset, 0) : Vector3.zero;
+        secondCard.transform.localPosition = secondCard.selected ? new Vector3(0, secondCard.selectionOffset, 0) : Vector3.zero;
+
+        isCrossing = false;
+
+        if (firstCard.cardVisual != null && secondCard.cardVisual != null)
+        {
+            bool swapIsRight = secondCard.ParentIndex() > firstCard.ParentIndex();
+            firstCard.cardVisual.Swap(swapIsRight ? 1 : -1);
+            secondCard.cardVisual.Swap(swapIsRight ? -1 : 1);
+        }
+
+        foreach (Card card in cards)
+        {
+            if (card.cardVisual != null)
+                card.cardVisual.UpdateIndex(transform.childCount);
         }
     }
 
