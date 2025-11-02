@@ -14,6 +14,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private VisualCardsHandler visualHandler;
     private Vector3 offset;
 
+    [Header("Data")]
+    public CharacterData characterData;
+
     [Header("Movement")]
     [SerializeField] private float moveSpeedLimit = 50;
 

@@ -13,6 +13,7 @@ public class CardVisual : MonoBehaviour
 
     [Header("Card")]
     public Card parentCard;
+    private CharacterData characterData;
     private Transform cardTransform;
     private Vector3 rotationDelta;
     private int savedIndex;
@@ -58,6 +59,7 @@ public class CardVisual : MonoBehaviour
     [SerializeField] private float swapTransition = .15f;
     [SerializeField] private int swapVibrato = 5;
 
+
     [Header("Curve")]
     [SerializeField] private CurveParameters curve;
     [SerializeField] private bool disableCurve;
@@ -79,6 +81,13 @@ public class CardVisual : MonoBehaviour
         cardTransform = target.transform;
         canvas = GetComponent<Canvas>();
         shadowCanvas = visualShadow.GetComponent<Canvas>();
+
+        //Set up data
+        if(target.characterData != null)
+        {
+            characterData = target.characterData;
+            cardImage.sprite = characterData.sprite;
+        }
 
         //Event Listening
         parentCard.PointerEnterEvent.AddListener(PointerEnter);

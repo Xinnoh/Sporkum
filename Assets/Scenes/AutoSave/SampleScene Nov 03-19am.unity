@@ -4144,8 +4144,7 @@ MonoBehaviour:
   cards: []
   tweenCardReturn: 0
   otherHolder: {fileID: 1859521596}
-  isController: 0
-  partyManager: {fileID: 1461495566}
+  partyManager: {fileID: 0}
 --- !u!1 &1622784940
 GameObject:
   m_ObjectHideFlags: 0
@@ -4680,8 +4679,7 @@ MonoBehaviour:
   cards: []
   tweenCardReturn: 0
   otherHolder: {fileID: 0}
-  isController: 0
-  partyManager: {fileID: 1461495566}
+  partyManager: {fileID: 0}
 --- !u!1 &1831887111
 GameObject:
   m_ObjectHideFlags: 0
@@ -4875,7 +4873,6 @@ MonoBehaviour:
   cards: []
   tweenCardReturn: 1
   otherHolder: {fileID: 1622237520}
-  isController: 1
   partyManager: {fileID: 1461495566}
 --- !u!114 &1859521597
 MonoBehaviour:

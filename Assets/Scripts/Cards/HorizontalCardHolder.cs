@@ -24,14 +24,37 @@ public class HorizontalCardHolder : MonoBehaviour
 
     [SerializeField] private HorizontalCardHolder otherHolder;
 
+    public bool isController;
     public PartyManager partyManager;
+    private PartyMembers partyMembersObject;
 
     void Start()
     {
+        if (partyManager != null)
+        {
+            partyMembersObject = partyManager.party;
+            Debug.Log("Party assigned from partyManager: " + (partyMembersObject != null));
+
+            cardsToSpawn = partyMembersObject.members.Length;
+        }
+
         for (int i = 0; i < cardsToSpawn; i++)
         {
-            Instantiate(slotPrefab, transform);
+
+            GameObject slot = Instantiate(slotPrefab, transform);
+
+            if (isController)
+            {
+                Card card = slot.GetComponentInChildren<Card>();
+
+                if (card != null && partyMembersObject != null && i < partyMembersObject.members.Length)
+                {
+                    card.characterData = partyMembersObject.members[i];
+                }
+            }
+
         }
+
 
         rect = GetComponent<RectTransform>();
         cards = GetComponentsInChildren<Card>().ToList();
