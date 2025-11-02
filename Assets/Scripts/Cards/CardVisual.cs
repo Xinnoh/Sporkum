@@ -215,5 +215,5 @@ public class CardVisual : MonoBehaviour
         visualShadow.localPosition += (-Vector3.up * shadowOffset);
         shadowCanvas.overrideSorting = false;
     }
-
+    
 }

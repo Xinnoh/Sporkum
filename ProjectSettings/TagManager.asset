@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - UICanvas
+  - Slot
   layers:
   - Default
   - TransparentFX

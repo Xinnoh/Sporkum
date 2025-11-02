@@ -12,6 +12,8 @@ public class CameraStateController : MonoBehaviour
     public Transform DungeonCamPos;
     public Transform CombatCamPos;
 
+    public bool moveCamera;
+
     [Header("Movement Settings")]
     public float MoveSpeed = 5f;
 
@@ -37,7 +39,7 @@ public class CameraStateController : MonoBehaviour
 
     void Update()
     {
-        if (targetPos == null)
+        if (targetPos == null || !moveCamera)
             return;
 
         transform.position = Vector3.Lerp(transform.position, targetPos.position, Time.deltaTime * MoveSpeed);
@@ -50,6 +52,8 @@ public class CameraStateController : MonoBehaviour
     /// </summary>
     void OnGameStateChanged(GameStateType newState)
     {
+        if (!moveCamera) return;
+
         switch (newState)
         {
             case GameStateType.Menu: targetPos = MenuCamPos; break;
