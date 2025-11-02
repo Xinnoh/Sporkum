@@ -60,6 +60,7 @@ public class CardVisual : MonoBehaviour
 
     [Header("Curve")]
     [SerializeField] private CurveParameters curve;
+    [SerializeField] private bool disableCurve;
 
     private float curveYOffset;
     private float curveRotationOffset;
@@ -68,9 +69,7 @@ public class CardVisual : MonoBehaviour
 
     private void Start()
     {
-        transform.position = parentCard.transform.position;
         shadowDistance = visualShadow.localPosition;
-
     }
 
     public void Initialize(Card target, int index = 0)
@@ -112,6 +111,8 @@ public class CardVisual : MonoBehaviour
 
     private void HandPositioning()
     {
+        if(disableCurve) return;
+
         curveYOffset = (curve.positioning.Evaluate(parentCard.NormalizedPosition()) * curve.positioningInfluence) * parentCard.SiblingAmount();
         curveYOffset = parentCard.SiblingAmount() < 5 ? 0 : curveYOffset;
         curveRotationOffset = curve.rotation.Evaluate(parentCard.NormalizedPosition());

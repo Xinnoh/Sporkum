@@ -140,7 +140,7 @@ MonoBehaviour:
   tiltParent: {fileID: 4762908757928920691}
   cardImage: {fileID: 5162326167967841881}
   followSpeed: 30
-  rotationAmount: 70
+  rotationAmount: 40
   rotationSpeed: 50
   autoTiltAmount: 15
   manualTiltAmount: 30
@@ -154,10 +154,11 @@ MonoBehaviour:
   hoverPunchAngle: 5
   hoverTransition: 0.15
   swapAnimations: 1
-  swapRotationAngle: 20
+  swapRotationAngle: 10
   swapTransition: 0.2
   swapVibrato: 5
   curve: {fileID: 11400000, guid: f98d16cd3c64bcb4387ad99f1d13afad, type: 2}
+  disableCurve: 0
 --- !u!225 &1591937632809731342
 CanvasGroup:
   m_ObjectHideFlags: 0
