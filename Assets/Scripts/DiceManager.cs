@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class DiceManager : MonoBehaviour
 {
+    public HorizontalCardHolder moveHolder;
 
-
-        public void RerollDice()
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            foreach (var dice in GameObject.FindGameObjectsWithTag("Dice"))
-                dice.GetComponent<Dice>().RerollValue();
+            RerollDice();
+        }
+    }
+
+
+
+    public void RerollDice()
+    {
+        foreach (var dice in GameObject.FindGameObjectsWithTag("Dice"))
+            dice.GetComponent<Dice>().RerollValue();
+
+        moveHolder.SyncDiceValues();
     }
 
 

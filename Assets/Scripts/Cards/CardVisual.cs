@@ -19,12 +19,14 @@ public class CardVisual : MonoBehaviour
     private int savedIndex;
     Vector3 movementDelta;
     private Canvas canvas;
+    public int diceAbove;
 
     [Header("References")]
     public Transform visualShadow;
     private float shadowOffset = 20;
     private Vector2 shadowDistance;
     private Canvas shadowCanvas;
+    private AttackVisual attackVisual;
     [SerializeField] private Transform shakeParent;
     [SerializeField] private Transform tiltParent;
     [SerializeField] private Image cardImage;
@@ -81,12 +83,14 @@ public class CardVisual : MonoBehaviour
         cardTransform = target.transform;
         canvas = GetComponent<Canvas>();
         shadowCanvas = visualShadow.GetComponent<Canvas>();
+        attackVisual = GetComponent<AttackVisual>();
 
         //Set up data
         if(target.characterData != null)
         {
             characterData = target.characterData;
             cardImage.sprite = characterData.sprite;
+            
         }
 
         //Event Listening
@@ -105,6 +109,14 @@ public class CardVisual : MonoBehaviour
     public void UpdateIndex(int length)
     {
         transform.SetSiblingIndex(parentCard.transform.parent.GetSiblingIndex());
+    }
+
+    public void UpdateAttack(int diceVal)
+    {
+        diceAbove = diceVal;
+
+        if (attackVisual != null)
+            attackVisual.UpdateMove(diceAbove);
     }
 
     public void UpdateSprite(Sprite sprite)

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7106751009129226742}
   - component: {fileID: 358482348743097834}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: Image3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3957831359540153020}
   m_Father: {fileID: 3559538945537269177}
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 23.9839}
+  m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2203548432506093120
 CanvasRenderer:
@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 2, y: 2}
+  m_EffectColor: {r: 0, g: 0.5943396, b: 0.026144939, a: 0.5}
+  m_EffectDistance: {x: 4, y: 4}
   m_UseGraphicAlpha: 1
 --- !u!1 &129310845755158753
 GameObject:
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 8765092579862270922}
   - component: {fileID: 6680722800672450004}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 2280904601385510546}
   - component: {fileID: 3712616138114019257}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 5163002628461548301}
   - component: {fileID: 6859099310828672782}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Image1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -479,7 +479,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 23.9839}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3576419289523199760
 CanvasRenderer:
@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 5293920644609914728}
   - component: {fileID: 9039341923505085358}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -681,7 +681,7 @@ GameObject:
   - component: {fileID: 5909481223133699517}
   - component: {fileID: 2699282684425283776}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Image2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -697,7 +697,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 452652676779791127}
   m_Father: {fileID: 3559538945537269177}
@@ -705,7 +705,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 23.9839}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2291697208193442496
 CanvasRenderer:
@@ -773,6 +773,7 @@ GameObject:
   - component: {fileID: 1591937632809731342}
   - component: {fileID: 4978542579372934470}
   - component: {fileID: 7032916978645604730}
+  - component: {fileID: -5252658353562097576}
   m_Layer: 5
   m_Name: InfoVisual
   m_TagString: Untagged
@@ -797,8 +798,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 200}
+  m_AnchoredPosition: {x: -8.733, y: 43.812}
+  m_SizeDelta: {x: 170, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6840181622681707512
 MonoBehaviour:
@@ -813,6 +814,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentCard: {fileID: 0}
+  diceAbove: 0
   visualShadow: {fileID: 5952725488096429355}
   shakeParent: {fileID: 6448580061901148274}
   tiltParent: {fileID: 4762908757928920691}
@@ -880,6 +882,40 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3192754223417464201}
   m_CullTransparentMesh: 1
+--- !u!114 &-5252658353562097576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192754223417464201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e33ef9767a2150f4ca7906217a0a0a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveImages:
+  - {fileID: 5163002628461548301}
+  - {fileID: 5909481223133699517}
+  - {fileID: 7106751009129226742}
+  - {fileID: 6550246635290387851}
+  - {fileID: 5327883568618963604}
+  - {fileID: 210330220630735128}
+  moveTexts:
+  - {fileID: 6680722800672450004}
+  - {fileID: 3712616138114019257}
+  - {fileID: 9039341923505085358}
+  - {fileID: 9050784922409359410}
+  - {fileID: 3884798012676762356}
+  - {fileID: 4431828482132693868}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  selectedColor: {r: 1, g: 0.9748177, b: 0.6839622, a: 1}
+  normalOutlineColor: {r: 0, g: 0, b: 0, a: 0.5254902}
+  selectedOutlineColor: {r: 0.33333334, g: 0.59607846, b: 0.003921569, a: 1}
+  normalHeight: 30
+  selectedHeight: 40
+  normalOutlineSize: 2
+  selectedOutlineSize: 6
 --- !u!1 &3271150736183675766
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,8 +952,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -6}
-  m_SizeDelta: {x: 142, y: 190}
+  m_AnchoredPosition: {x: -8.2, y: -9.2134}
+  m_SizeDelta: {x: 177.5531, y: 288.7365}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7293404133742489665
 CanvasRenderer:
@@ -949,7 +985,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 82f30afe81faffc4c98e26224cb5b100, type: 3}
   m_Type: 0
-  m_PreserveAspect: 1
+  m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1013,7 +1049,7 @@ GameObject:
   - component: {fileID: 5327883568618963604}
   - component: {fileID: 8882714886604275896}
   m_Layer: 5
-  m_Name: Image (4)
+  m_Name: Image5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1037,7 +1073,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 23.9839}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8332227847722248529
 CanvasRenderer:
@@ -1104,7 +1140,7 @@ GameObject:
   - component: {fileID: 8349391043496207837}
   - component: {fileID: 3884798012676762356}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1239,7 +1275,7 @@ GameObject:
   - component: {fileID: 6550246635290387851}
   - component: {fileID: 2810299334919329513}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: Image4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1263,7 +1299,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 23.9839}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &851302183494147383
 CanvasRenderer:
@@ -1331,7 +1367,7 @@ GameObject:
   - component: {fileID: 210330220630735128}
   - component: {fileID: 4522571898628480906}
   m_Layer: 5
-  m_Name: Image (5)
+  m_Name: Image6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1355,7 +1391,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 23.9839}
+  m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3271478761164826676
 CanvasRenderer:
@@ -1422,7 +1458,7 @@ GameObject:
   - component: {fileID: 8706551587516238411}
   - component: {fileID: 9050784922409359410}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1664,7 +1700,7 @@ GameObject:
   - component: {fileID: 7456736768208099823}
   - component: {fileID: 4431828482132693868}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Text6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

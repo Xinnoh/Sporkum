@@ -157,7 +157,8 @@ MonoBehaviour:
   swapRotationAngle: 20
   swapTransition: 0.2
   swapVibrato: 5
-  curve: {fileID: 11400000, guid: f98d16cd3c64bcb4387ad99f1d13afad, type: 2}
+  curve: {fileID: 11400000, guid: 0d797d9e22107cd43b855795209a4e73, type: 2}
+  disableCurve: 1
 --- !u!225 &1591937632809731342
 CanvasGroup:
   m_ObjectHideFlags: 0

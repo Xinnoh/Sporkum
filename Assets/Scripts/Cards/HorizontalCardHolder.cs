@@ -22,9 +22,11 @@ public class HorizontalCardHolder : MonoBehaviour
     bool isCrossing = false;
     [SerializeField] private bool tweenCardReturn = true;
 
-    [SerializeField] private HorizontalCardHolder otherHolder;
+    [SerializeField] private HorizontalCardHolder otherHolder, diceHolder;
 
+    [Tooltip("If true, on start, takes vals from player slot and applies them to move slot")]
     public bool isController;
+
     public PartyManager partyManager;
     private PartyMembers partyMembersObject;
 
@@ -37,7 +39,6 @@ public class HorizontalCardHolder : MonoBehaviour
         if (partyManager != null)
         {
             partyMembersObject = partyManager.party;
-            Debug.Log("Party assigned from partyManager: " + (partyMembersObject != null));
 
             cardsToSpawn = partyMembersObject.members.Length;
         }
@@ -82,9 +83,38 @@ public class HorizontalCardHolder : MonoBehaviour
             yield return new WaitForSecondsRealtime(.1f);
             for (int i = 0; i < cards.Count; i++)
             {
-                if (cards[i].cardVisual != null)
-                    cards[i].cardVisual.UpdateIndex(transform.childCount);
+                var currCardVis = cards[i].cardVisual;
+
+                Debug.Log(currCardVis);
+
+                if (currCardVis != null) continue;
+                
+                currCardVis.UpdateIndex(transform.childCount);
             }
+
+
+            SyncDiceValues();
+        }
+
+    }
+
+
+    public void SyncDiceValues()
+    {
+        if (isController || diceHolder == null) return;
+
+        for (int i = 0; i < cards.Count; i++)
+        {
+            var card = cards[i];
+            if (card == null || card.cardVisual == null) continue;
+
+            int parentIndex = card.ParentIndex();
+
+            var matchingDie = diceHolder.cards.FirstOrDefault(d => d != null && d.ParentIndex() == parentIndex);
+            var diceScript = matchingDie?.GetComponent<Dice>();
+            if (diceScript == null) continue;
+
+            card.cardVisual.UpdateAttack(diceScript.currDiceVal);
         }
     }
 
@@ -137,6 +167,7 @@ public class HorizontalCardHolder : MonoBehaviour
                 }
 
 
+
                 Destroy(hoveredCard.transform.parent.gameObject);
                 cards.Remove(hoveredCard);
 
@@ -180,73 +211,55 @@ public class HorizontalCardHolder : MonoBehaviour
         }
     }
 
+
     void Swap(int index)
     {
         int selectedIndex = cards.IndexOf(selectedCard);
-
-        isCrossing = true;
-
-        Transform focusedParent = selectedCard.transform.parent;
-        Transform crossedParent = cards[index].transform.parent;
-
-        cards[index].transform.SetParent(focusedParent);
-        cards[index].transform.localPosition = cards[index].selected ? new Vector3(0, cards[index].selectionOffset, 0) : Vector3.zero;
-        selectedCard.transform.SetParent(crossedParent);
-
-
-
-        isCrossing = false;
-
-        if (cards[index].cardVisual == null)
-            return;
-
-        bool swapIsRight = cards[index].ParentIndex() > selectedCard.ParentIndex();
-        cards[index].cardVisual.Swap(swapIsRight ? -1 : 1);
-
-        
+        SwapCards(selectedCard, cards[index]);
 
         if (otherHolder != null)
             otherHolder.ExternalSwap(selectedIndex, index);
 
-
-        //Updated Visual Indexes
-        foreach (Card card in cards)
-        {
-            card.cardVisual.UpdateIndex(transform.childCount);
-        }
+        UpdateAllCardVisualIndexes();
     }
-
 
     public void ExternalSwap(int currCardIndex, int index)
     {
+        SwapCards(cards[currCardIndex], cards[index]);
+        UpdateAllCardVisualIndexes();
+    }
+
+    private void SwapCards(Card a, Card b)
+    {
         isCrossing = true;
 
-        Card firstCard = cards[currCardIndex];
-        Card secondCard = cards[index];
+        Transform parentA = a.transform.parent;
+        Transform parentB = b.transform.parent;
 
-        Transform firstParent = firstCard.transform.parent;
-        Transform secondParent = secondCard.transform.parent;
+        a.transform.SetParent(parentB);
+        b.transform.SetParent(parentA);
 
-        firstCard.transform.SetParent(secondParent);
-        secondCard.transform.SetParent(firstParent);
+        a.transform.localPosition = a.selected ? new Vector3(0, a.selectionOffset, 0) : Vector3.zero;
+        b.transform.localPosition = b.selected ? new Vector3(0, b.selectionOffset, 0) : Vector3.zero;
 
-        firstCard.transform.localPosition = firstCard.selected ? new Vector3(0, firstCard.selectionOffset, 0) : Vector3.zero;
-        secondCard.transform.localPosition = secondCard.selected ? new Vector3(0, secondCard.selectionOffset, 0) : Vector3.zero;
+        if (a.cardVisual != null && b.cardVisual != null)
+        {
+            bool swapIsRight = b.ParentIndex() > a.ParentIndex();
+            a.cardVisual.Swap(swapIsRight ? 1 : -1);
+            b.cardVisual.Swap(swapIsRight ? -1 : 1);
+        }
 
         isCrossing = false;
+    }
 
-        if (firstCard.cardVisual != null && secondCard.cardVisual != null)
-        {
-            bool swapIsRight = secondCard.ParentIndex() > firstCard.ParentIndex();
-            firstCard.cardVisual.Swap(swapIsRight ? 1 : -1);
-            secondCard.cardVisual.Swap(swapIsRight ? -1 : 1);
-        }
-
+    private void UpdateAllCardVisualIndexes()
+    {
         foreach (Card card in cards)
         {
-            if (card.cardVisual != null)
-                card.cardVisual.UpdateIndex(transform.childCount);
+            card.cardVisual?.UpdateIndex(transform.childCount);
         }
+
+        SyncDiceValues();
     }
 
 }

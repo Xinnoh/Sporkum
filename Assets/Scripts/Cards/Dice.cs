@@ -11,14 +11,13 @@ public class Dice : MonoBehaviour
     private Card card;
     public Sprite[] diceSprites;
 
-    private int diceVal { get; set; }
+    public int currDiceVal;
 
 
     // Start is called before the first frame update
     void Start()
     {
         card = GetComponent<Card>();
-        diceVal = Random.Range(minDiceVal, maxDiceVal);
 
         RerollValue();
     }
@@ -32,10 +31,10 @@ public class Dice : MonoBehaviour
 
     public void RerollValue()
     {
-        diceVal = Random.Range(minDiceVal, maxDiceVal);
+        // +1 because doesn't roll the max otherwise
+        currDiceVal = Random.Range((int)minDiceVal, (int)maxDiceVal + 1);
 
-        card.cardVisual.UpdateSprite(diceSprites[diceVal - 1]);
-
+        card.cardVisual.UpdateSprite(diceSprites[currDiceVal - 1]);
     }
 
 }
