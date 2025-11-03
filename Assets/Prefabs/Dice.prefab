@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 8984924063339049134}
   - component: {fileID: 900420090831697648}
   - component: {fileID: 2591519889541867085}
+  - component: {fileID: 2267944275104745781}
   m_Layer: 5
   m_Name: Dice
-  m_TagString: Untagged
+  m_TagString: Dice
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,6 +62,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantiateVisual: 1
+  characterData: {fileID: 0}
   moveSpeedLimit: 50
   selected: 0
   selectionOffset: 25
@@ -177,3 +179,24 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 8, y: 8}
   m_UseGraphicAlpha: 1
+--- !u!114 &2267944275104745781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276171221718647564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63ee9547b2c9604680385b8d1245ad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDiceVal: 1
+  maxDiceVal: 6
+  diceSprites:
+  - {fileID: 21300000, guid: 60feded4b5e26b341b63185ccc3e4677, type: 3}
+  - {fileID: 21300000, guid: 3279dfa42dad3c04fa152c4171215976, type: 3}
+  - {fileID: 21300000, guid: e13ffd722c7fee0469416e141ff8925a, type: 3}
+  - {fileID: 21300000, guid: 3632396dfc031024bafdbbb153d7bc97, type: 3}
+  - {fileID: 21300000, guid: 81de5fc9843e9f7449a8d9fe2d2f00f0, type: 3}
+  - {fileID: 21300000, guid: 55f0b6056589c9a4ebdea73967e30bbc, type: 3}

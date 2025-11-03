@@ -30,6 +30,10 @@ public class HorizontalCardHolder : MonoBehaviour
 
     void Start()
     {
+    }
+
+    public void StartCombat()
+    {
         if (partyManager != null)
         {
             partyMembersObject = partyManager.party;
@@ -83,6 +87,7 @@ public class HorizontalCardHolder : MonoBehaviour
             }
         }
     }
+
 
     private void BeginDrag(Card card)
     {

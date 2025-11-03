@@ -107,6 +107,11 @@ public class CardVisual : MonoBehaviour
         transform.SetSiblingIndex(parentCard.transform.parent.GetSiblingIndex());
     }
 
+    public void UpdateSprite(Sprite sprite)
+    {
+        cardImage.sprite = sprite;
+    }
+
     void Update()
     {
         if (!initalize || parentCard == null) return;
