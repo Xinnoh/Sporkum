@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 900420090831697648}
   - component: {fileID: 2591519889541867085}
   - component: {fileID: 8310665725264231219}
+  - component: {fileID: 2801811123149441456}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -62,10 +63,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantiateVisual: 1
+  attackHandler: {fileID: 0}
   characterData: {fileID: 0}
   groupType: 0
   currentHealth: 0
   maxHealth: 0
+  isEnemy: 0
   moveSpeedLimit: 50
   selected: 0
   canBeSelected: 0
@@ -195,4 +198,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf2fdcb37e3a77641a25325e2b59e4d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healOnCombatStart: 1
+  healOnCombatStart: 0
+--- !u!114 &2801811123149441456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276171221718647564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66c2090a25165ff418b291cdcebaf8c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

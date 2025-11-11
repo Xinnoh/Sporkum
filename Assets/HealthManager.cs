@@ -45,43 +45,64 @@ public class HealthManager : MonoBehaviour
 
     public void UpdateHealthSlider()
     {
-        hpSlider.value = currentHealth;
+        if (hpSlider != null)
+            hpSlider.value = currentHealth;
     }
 
 
-    public void TakeDamage()
+    public void TakeDamage(int damage)
     {
+        currentHealth = Mathf.Max(0, currentHealth - damage);
+        UpdateHealthSlider();
 
+        if (currentHealth <= 0)
+            Kill();
     }
 
-    public void Heal()
+    public void Heal(int amount)
     {
-
+        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        UpdateHealthSlider();
     }
+
 
     public void Kill()
     {
 
     }
 
+    public bool IsAlive()
+    {
+        return currentHealth > 0;
+    }
 
     public void InitialiseHealthSlider()
     {
         card = GetComponent<Card>();
+        if (card == null) return;
 
         characterData = card.characterData;
+        if (characterData == null) return;
 
-
-        maxHealth = characterData.hp;
         cardVisual = card.cardVisual;
+        if (cardVisual == null) return;
 
         hpSlider = cardVisual.GetComponentInChildren<Slider>();
-
-
-        if (healOnCombatStart)
+        if (hpSlider == null) return;
+        
+        // On first run
+        if (characterData.maxHp == 0)
         {
+            maxHealth = characterData.startingMaxHP;
             currentHealth = maxHealth;
         }
+        else
+        {
+            maxHealth = characterData.maxHp;
+        }
+
+        if (healOnCombatStart)
+            currentHealth = maxHealth;
 
         hpSlider.maxValue = maxHealth;
         hpSlider.value = currentHealth;

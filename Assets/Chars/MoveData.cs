@@ -8,8 +8,21 @@ using UnityEngine;
 public class MoveData : ScriptableObject
 {
     public string moveName;
-    public string description;
+    [TextArea] public string description;
 
     public int power;
+    public MoveTarget targetType;
+    public AnimationClip animation;
 
+    public float hitDelay, endDelay;
+
+    public MoveEffect moveEffect;
+    public enum MoveTarget
+    {
+        SingleEnemy,
+        AllEnemies,
+        Self,
+        AllAllies,
+        Other
+    }
 }

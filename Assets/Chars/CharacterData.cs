@@ -12,9 +12,12 @@ public class CharacterData : ScriptableObject
     public Sprite sprite;
     public bool flipSprite;
 
-    public int hp;
-    public int attack;
 
-    public MoveData[] moveDatas; 
+    public int startingMaxHP, startingAttack;
+
+    public MoveData[] moveDatas;
+
+    [HideInInspector] public int maxHp, currentHp, attack, currentAttack;
+
 
 }

@@ -311,4 +311,13 @@ public class HorizontalCardHolder : MonoBehaviour
         SyncMovesToDice();
     }
 
+    public HorizontalCardHolder GetDiceHolder()
+    {
+        return diceHolder;
+    }
+
+    public HorizontalCardHolder GetOtherHolder()
+    {
+        return otherHolder;
+    }
 }

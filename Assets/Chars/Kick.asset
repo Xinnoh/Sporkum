@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fd8f881f9b1c1429f80af0cdea5f52, type: 3}
   m_Name: Kick
   m_EditorClassIdentifier: 
-  moveName: Kick
+  moveName: Kick AOE
   description: pow
-  power: 2
+  power: 1
+  targetType: 1
+  animation: {fileID: 0}
+  hitDelay: 0
+  endDelay: 0

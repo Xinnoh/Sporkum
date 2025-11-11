@@ -6,8 +6,7 @@ public class CombatManager : MonoBehaviour
 {
     private DiceManager diceManager;
 
-    [SerializeField] HorizontalCardHolder[] playerCardHolders;
-    [SerializeField] HorizontalCardHolder[] enemyCardHolders;
+    private HorizontalCardHolder[] playerCardHolders, enemyCardHolders;
     public AttackManager attackManager;
 
     public CombatState combatState;
@@ -20,6 +19,9 @@ public class CombatManager : MonoBehaviour
     void Start()
     {
         diceManager = GetComponent<DiceManager>();
+        playerCardHolders = CardHolderRegistry.Instance.playerHolders;
+        enemyCardHolders = CardHolderRegistry.Instance.enemyHolders;
+
         enemyCardHolders[0].SetTurnActive(false);
         enemyCardHolders[1].SetTurnActive(false);
     }
@@ -74,7 +76,10 @@ public class CombatManager : MonoBehaviour
         SetTurnActive(false);
         Debug.Log("Combat Intro started.A");
 
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.A) || requestedState.HasValue);
+        yield return new WaitForSeconds(0.3f);
+
+
+        // yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.A) || requestedState.HasValue);
 
         TryApplyRequestedState();
 
@@ -103,6 +108,8 @@ public class CombatManager : MonoBehaviour
         SetTurnActive(false);
 
         Debug.Log("Player Animations playing.D");
+
+        yield return StartCoroutine(attackManager.PlayerAttackPhase());
 
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.D) || requestedState.HasValue);
 

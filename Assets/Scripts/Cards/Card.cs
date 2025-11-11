@@ -12,6 +12,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     private Image imageComponent;
     [SerializeField] private bool instantiateVisual = true;
     private VisualCardsHandler visualHandler;
+    [HideInInspector] public AttackHandler attackHandler;
     private Vector3 offset;
 
     [Header("Data")]
@@ -57,6 +58,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         imageComponent = GetComponent<Image>();
         selectable = GetComponent<Selectable>();
         cardCombat = GetComponent<HealthManager>();
+        attackHandler = GetComponent<AttackHandler>();
 
         CardSelectable(false);
 
@@ -67,7 +69,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         cardVisual = Instantiate(cardVisualPrefab, visualHandler ? visualHandler.transform : canvas.transform).GetComponent<CardVisual>();
         cardVisual.Initialize(this);
 
-        InitialiseHealth();
+
+        if (groupType == GroupType.Character)
+        {
+            InitialiseHealth();
+            attackHandler.Initialise();
+        }
 
     }
 
@@ -83,6 +90,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             transform.Translate(velocity * Time.deltaTime);
         }
     }
+
 
 
     void ClampPosition()
@@ -195,11 +203,12 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     public void InitialiseHealth()
     {
         cardCombat = GetComponent<HealthManager>();
+
         if(cardCombat != null)
         {
             cardCombat.InitialiseHealthSlider();
         }
-        else { Debug.Log("Skibidi"); }
+        else { Debug.Log("No Health"); }
     }
 
 

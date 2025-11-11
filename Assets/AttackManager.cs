@@ -4,11 +4,76 @@ using UnityEngine;
 
 public class AttackManager : MonoBehaviour
 {
-    [SerializeField] HorizontalCardHolder[] playerCardHolders;
-    [SerializeField] HorizontalCardHolder[] enemyCardHolders;
+    private HorizontalCardHolder playerHolder, enemyHolder;
 
     public CombatManager combatManager;
 
 
+    void Start()
+    {
+        playerHolder = CardHolderRegistry.Instance.playerCharacterHolder;
+        enemyHolder = CardHolderRegistry.Instance.enemyCharacterHolder;
+    }
 
+
+    private IEnumerator AttackPhase(HorizontalCardHolder holder, string nextPhaseDebug)
+    {
+        foreach (var card in holder.cards)
+        {
+            if (card == null) continue;
+            var attackHandler = card.attackHandler;
+            if (attackHandler == null) continue;
+
+            yield return StartCoroutine(attackHandler.PerformAttack());
+
+            if (IsBattleOver()) yield break;
+
+            Debug.Log("Attack:");
+            yield return new WaitForSeconds(1);
+        }
+
+        Debug.Log(nextPhaseDebug);
+    }
+
+    public IEnumerator PlayerAttackPhase()
+    {
+        yield return AttackPhase(playerHolder, "Player attacks done Å® Enemy turn");
+    }
+
+    public IEnumerator EnemyAttackPhase()
+    {
+        yield return AttackPhase(enemyHolder, "Enemy attacks done Å® Back to player");
+    }
+    bool IsBattleOver()
+    {
+        if (AllDead(playerHolder))
+        {
+            combatManager.SetStateLose();
+            return true;
+        }
+
+        if (AllDead(enemyHolder))
+        {
+            combatManager.SetStateWin();
+            return true;
+        }
+
+        return false;
+    }
+
+    bool AllDead(HorizontalCardHolder holder)
+    {
+        if (holder == null || holder.cards == null) return true;
+
+        foreach (var card in holder.cards)
+        {
+            if (card == null) continue;
+
+            var health = card.GetComponent<HealthManager>();
+            if (health != null && health.IsAlive())
+                return false;
+        }
+
+        return true;
+    }
 }

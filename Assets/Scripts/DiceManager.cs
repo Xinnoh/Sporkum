@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class DiceManager : MonoBehaviour
 {
-    public HorizontalCardHolder playerHolder, enemyHolder, playerMoves, enemyMoves;
+
+
+    private HorizontalCardHolder playerHolder, enemyHolder, playerMoves, enemyMoves;
+
+
+
+    private void Start()
+    {
+        playerHolder = CardHolderRegistry.Instance.playerCharacterHolder;
+        enemyHolder = CardHolderRegistry.Instance.enemyCharacterHolder;
+        playerMoves = CardHolderRegistry.Instance.playerMoveHolder;
+        enemyMoves = CardHolderRegistry.Instance.enemyMoveHolder;
+    }
 
     private void Update()
     {

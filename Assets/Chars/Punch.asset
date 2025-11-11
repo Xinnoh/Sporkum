@@ -13,5 +13,9 @@ MonoBehaviour:
   m_Name: Punch
   m_EditorClassIdentifier: 
   moveName: Punch
-  description: 
-  power: 5
+  description: Throws a punch
+  power: 1
+  targetType: 0
+  animation: {fileID: 0}
+  hitDelay: 0
+  endDelay: 0
