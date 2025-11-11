@@ -26,7 +26,7 @@ public class CardVisual : MonoBehaviour
     private float shadowOffset = 20;
     private Vector2 shadowDistance;
     private Canvas shadowCanvas;
-    private AttackVisual attackVisual;
+    [SerializeField] private AttackVisual attackVisual;
     [SerializeField] private Transform shakeParent;
     [SerializeField] private Transform tiltParent;
     [SerializeField] private Image cardImage;
@@ -74,6 +74,18 @@ public class CardVisual : MonoBehaviour
     private void Start()
     {
         shadowDistance = visualShadow.localPosition;
+
+
+        attackVisual = GetComponent<AttackVisual>();
+
+        if (initalize)
+        {
+            if (attackVisual != null)
+            {
+                attackVisual.InitialiseMoves(parentCard.characterData);
+            }
+        }
+
     }
 
     public void Initialize(Card target, int index = 0)
@@ -83,14 +95,25 @@ public class CardVisual : MonoBehaviour
         cardTransform = target.transform;
         canvas = GetComponent<Canvas>();
         shadowCanvas = visualShadow.GetComponent<Canvas>();
-        attackVisual = GetComponent<AttackVisual>();
 
         //Set up data
-        if(target.characterData != null)
+        if(parentCard.characterData != null)
         {
-            characterData = target.characterData;
-            cardImage.sprite = characterData.sprite;
-            
+            characterData = parentCard.characterData;
+
+            if(parentCard.groupType == GroupType.Character)
+            {
+                cardImage.sprite = characterData.sprite;
+            }
+
+            if (parentCard.groupType == GroupType.Moves)
+            {
+                attackVisual = GetComponent<AttackVisual>();
+                if (attackVisual != null)
+                {
+                    attackVisual.InitialiseMoves(characterData);
+                }
+            }
         }
 
         //Event Listening
@@ -104,6 +127,11 @@ public class CardVisual : MonoBehaviour
 
         //Initialization
         initalize = true;
+    }
+
+    private void Awake()
+    {
+        
     }
 
     public void UpdateIndex(int length)
@@ -179,6 +207,8 @@ public class CardVisual : MonoBehaviour
 
     private void Select(Card card, bool state)
     {
+
+
         DOTween.Kill(2, true);
         float dir = state ? 1 : 0;
         shakeParent.DOPunchPosition(shakeParent.up * selectPunchAmount * dir, scaleTransition, 10, 1);
@@ -200,6 +230,8 @@ public class CardVisual : MonoBehaviour
 
     private void BeginDrag(Card card)
     {
+        if (!card.canBeSelected) return;
+
         if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
 
@@ -214,6 +246,8 @@ public class CardVisual : MonoBehaviour
 
     private void PointerEnter(Card card)
     {
+        if (!card.canBeSelected) return;
+
         if (scaleAnimations)
             transform.DOScale(scaleOnHover, scaleTransition).SetEase(scaleEase);
 
@@ -239,6 +273,8 @@ public class CardVisual : MonoBehaviour
 
     private void PointerDown(Card card)
     {
+        if (!card.canBeSelected) return;
+
         if (scaleAnimations)
             transform.DOScale(scaleOnSelect, scaleTransition).SetEase(scaleEase);
 

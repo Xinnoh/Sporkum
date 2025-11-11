@@ -63,6 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instantiateVisual: 1
   characterData: {fileID: 0}
+  groupType: 2
   moveSpeedLimit: 50
   selected: 0
   selectionOffset: 25
@@ -200,3 +201,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3632396dfc031024bafdbbb153d7bc97, type: 3}
   - {fileID: 21300000, guid: 81de5fc9843e9f7449a8d9fe2d2f00f0, type: 3}
   - {fileID: 21300000, guid: 55f0b6056589c9a4ebdea73967e30bbc, type: 3}
+  currDiceVal: 0

@@ -15,11 +15,11 @@ MonoBehaviour:
   characterName: Enemy
   description: bad gy
   sprite: {fileID: 21300000, guid: b0f7ece065775c54497eff64f7d5df86, type: 3}
+  flipSprite: 0
   hp: 8
   attack: 3
-  move1: {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
-  move2: {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
-  move3: {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
-  move4: {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
-  move5: {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
-  move6: {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
+  moveDatas:
+  - {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
+  - {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
+  - {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}
+  - {fileID: 11400000, guid: 9f9eb2cc95b798346b015710144f79b4, type: 2}

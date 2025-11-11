@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8984924063339049134}
   - component: {fileID: 900420090831697648}
   - component: {fileID: 2591519889541867085}
+  - component: {fileID: 8310665725264231219}
   m_Layer: 5
   m_Name: Card
   m_TagString: Untagged
@@ -61,8 +62,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instantiateVisual: 1
+  characterData: {fileID: 0}
+  groupType: 0
+  currentHealth: 0
+  maxHealth: 0
   moveSpeedLimit: 50
   selected: 0
+  canBeSelected: 0
   selectionOffset: 25
   cardVisualPrefab: {fileID: 3192754223417464201, guid: 0d9f88140f046da408ee7f6a10a208a3,
     type: 3}
@@ -177,3 +183,16 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 8, y: 8}
   m_UseGraphicAlpha: 1
+--- !u!114 &8310665725264231219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2276171221718647564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2fdcb37e3a77641a25325e2b59e4d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healOnCombatStart: 1

@@ -9,6 +9,8 @@ public class AttackVisual : MonoBehaviour
     [Header("Setup")]
     public List<Image> moveImages;
     public List<TMP_Text> moveTexts;
+    [HideInInspector] public MoveData[] moveData;
+    public GameObject panel, movePrefab;
 
     [Header("Colors")]
     public Color normalColor = Color.white;
@@ -29,6 +31,43 @@ public class AttackVisual : MonoBehaviour
     public Ease tweenEase = Ease.OutQuad;
 
     private int selectedIndex = -1;
+
+
+    public void InitialiseMoves(CharacterData characterData)
+    {
+        moveData = characterData.moveDatas;
+
+
+        for (int i = panel.transform.childCount - 1; i >= 0; i--)
+            Destroy(panel.transform.GetChild(i).gameObject);
+
+        moveImages.Clear();
+        moveTexts.Clear();
+
+        foreach (var move in moveData)
+        {
+            GameObject moveObj = Instantiate(movePrefab, panel.transform);
+            Image img = moveObj.GetComponentInChildren<Image>();
+            TMP_Text txt = moveObj.GetComponentInChildren<TMP_Text>();
+
+            moveImages.Add(img);
+            if (txt != null)
+            {
+                txt.text = move.moveName;
+                moveTexts.Add(txt);
+            }
+        }
+
+
+        //for (int i = 0; i < moveData.Length && i < moveTexts.Count; i++)
+        //{
+        //    if (moveTexts[i] != null)
+        //        moveTexts[i].text = moveData[i].moveName;
+        //    else
+
+        //        Debug.Log("null");
+        //}
+    }
 
     public void UpdateMove(int index)
     {

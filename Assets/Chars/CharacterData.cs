@@ -15,6 +15,6 @@ public class CharacterData : ScriptableObject
     public int hp;
     public int attack;
 
-    public MoveData move1, move2, move3,move4,move5,move6;
+    public MoveData[] moveDatas; 
 
 }

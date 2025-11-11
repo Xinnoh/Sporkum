@@ -6,5 +6,5 @@ public class PartyManager : MonoBehaviour
 {
     public PartyMembers party;
 
-
+    public bool isEnemy;
 }

@@ -4,26 +4,48 @@ using UnityEngine;
 
 public class DiceManager : MonoBehaviour
 {
-    public HorizontalCardHolder moveHolder;
+    public HorizontalCardHolder playerHolder, enemyHolder, playerMoves, enemyMoves;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            RerollDice();
+            RerollPlayerDice();
+            RerollEnemyDice();
         }
     }
 
 
 
-    public void RerollDice()
+    public void RerollPlayerDice()
     {
-        foreach (var dice in GameObject.FindGameObjectsWithTag("Dice"))
-            dice.GetComponent<Dice>().RerollValue();
-
-        moveHolder.SyncDiceValues();
+        RerollDiceInHolder(playerHolder);
     }
 
+    public void RerollEnemyDice()
+    {
+        RerollDiceInHolder(enemyHolder);
+    }
+
+    private void RerollDiceInHolder(HorizontalCardHolder holder)
+    {
+        if (holder == null || holder.cards == null) return;
+
+        foreach (var card in holder.cards)
+        {
+            if (card == null) continue;
+
+            var dice = card.GetComponent<Dice>();
+
+            if (dice != null)
+            {
+                dice.RerollValue();
+
+            }
+        }
+        playerMoves.SyncMovesToDice();
+        enemyMoves.SyncMovesToDice();
+    }
 
 
 }

@@ -9,15 +9,12 @@ using System.Linq;
 public class HorizontalCardHolder : MonoBehaviour
 {
 
-    [SerializeField] private Card selectedCard;
-    [SerializeReference] private Card hoveredCard;
-
+    [Header("Spawn Settings")]
     [SerializeField] private GameObject slotPrefab;
     private RectTransform rect;
 
-    [Header("Spawn Settings")]
-    [SerializeField] private int cardsToSpawn = 7;
-    public List<Card> cards;
+    private int cardsToSpawn = 2;
+    [HideInInspector] public List<Card> cards;
 
     bool isCrossing = false;
     [SerializeField] private bool tweenCardReturn = true;
@@ -25,10 +22,18 @@ public class HorizontalCardHolder : MonoBehaviour
     [SerializeField] private HorizontalCardHolder otherHolder, diceHolder;
 
     [Tooltip("If true, on start, takes vals from player slot and applies them to move slot")]
-    public bool isController;
+    [SerializeField] private GroupType groupType = GroupType.Moves;
+    public GroupType GroupType => groupType;
 
     public PartyManager partyManager;
     private PartyMembers partyMembersObject;
+    private bool isEnemy;
+
+    private bool canSelectCards;
+
+    [Header("Debug")]
+    [SerializeField] private Card selectedCard;
+    [SerializeReference] private Card hoveredCard;
 
     void Start()
     {
@@ -40,6 +45,7 @@ public class HorizontalCardHolder : MonoBehaviour
         {
             partyMembersObject = partyManager.party;
 
+            isEnemy = partyManager.isEnemy;
             cardsToSpawn = partyMembersObject.members.Length;
         }
 
@@ -47,14 +53,24 @@ public class HorizontalCardHolder : MonoBehaviour
         {
 
             GameObject slot = Instantiate(slotPrefab, transform);
+            CharacterData currentCharacter = partyMembersObject.members[i];
 
-            if (isController)
+            if (groupType == GroupType.Character || groupType == GroupType.Moves)
             {
                 Card card = slot.GetComponentInChildren<Card>();
-
                 if (card != null && partyMembersObject != null && i < partyMembersObject.members.Length)
                 {
-                    card.characterData = partyMembersObject.members[i];
+                    card.characterData = currentCharacter;
+                    card.isEnemy = isEnemy;
+                }
+            }
+
+            else if(groupType == GroupType.Dice)
+            {
+                Dice dice = slot.GetComponentInChildren<Dice>();
+                if(dice != null)
+                {
+                    dice.SetMaxDieValue(currentCharacter);
                 }
             }
 
@@ -85,37 +101,37 @@ public class HorizontalCardHolder : MonoBehaviour
             {
                 var currCardVis = cards[i].cardVisual;
 
-                Debug.Log(currCardVis);
-
                 if (currCardVis != null) continue;
                 
                 currCardVis.UpdateIndex(transform.childCount);
             }
 
 
-            SyncDiceValues();
+            SyncMovesToDice();
         }
 
     }
 
 
-    public void SyncDiceValues()
+    public void SyncMovesToDice()
     {
-        if (isController || diceHolder == null) return;
-
-        for (int i = 0; i < cards.Count; i++)
+        if (groupType == GroupType.Moves)
         {
-            var card = cards[i];
-            if (card == null || card.cardVisual == null) continue;
+            for (int i = 0; i < cards.Count; i++)
+            {
+                var card = cards[i];
+                if (card == null || card.cardVisual == null) continue;
 
-            int parentIndex = card.ParentIndex();
+                int parentIndex = card.ParentIndex();
 
-            var matchingDie = diceHolder.cards.FirstOrDefault(d => d != null && d.ParentIndex() == parentIndex);
-            var diceScript = matchingDie?.GetComponent<Dice>();
-            if (diceScript == null) continue;
+                var matchingDie = diceHolder.cards.FirstOrDefault(d => d != null && d.ParentIndex() == parentIndex);
+                var diceScript = matchingDie?.GetComponent<Dice>();
+                if (diceScript == null) continue;
 
-            card.cardVisual.UpdateAttack(diceScript.currDiceVal);
+                card.cardVisual.UpdateAttack(diceScript.currDiceVal);
+            }
         }
+
     }
 
 
@@ -136,7 +152,6 @@ public class HorizontalCardHolder : MonoBehaviour
         rect.sizeDelta -= Vector2.right;
 
         selectedCard = null;
-
     }
 
     void CardPointerEnter(Card card)
@@ -212,6 +227,40 @@ public class HorizontalCardHolder : MonoBehaviour
     }
 
 
+    public void SetTurnActive(bool active)
+    {
+        canSelectCards = active;
+        foreach (var card in cards)
+        {
+            if (card != null)
+            {
+
+                card.CardSelectable(active);
+
+                if (!active)
+                {
+                    if(card.selected)
+                        card.Deselect();
+
+
+                    // BUG: This doesn't actually work. Just don't hold while dragging.
+                    if (card.isDragging)
+                        EndDrag(card);
+                    
+                }
+            }
+
+
+        }
+    }
+
+    public bool IsTurnActive()
+    {
+        return canSelectCards;
+    }
+
+
+
     void Swap(int index)
     {
         int selectedIndex = cards.IndexOf(selectedCard);
@@ -259,7 +308,7 @@ public class HorizontalCardHolder : MonoBehaviour
             card.cardVisual?.UpdateIndex(transform.childCount);
         }
 
-        SyncDiceValues();
+        SyncMovesToDice();
     }
 
 }

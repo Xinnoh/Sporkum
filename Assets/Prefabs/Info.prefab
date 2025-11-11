@@ -62,6 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   instantiateVisual: 1
   characterData: {fileID: 0}
+  groupType: 1
   moveSpeedLimit: 50
   selected: 0
   selectionOffset: 25

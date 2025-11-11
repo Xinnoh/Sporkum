@@ -16,15 +16,22 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     [Header("Data")]
     public CharacterData characterData;
+    public GroupType groupType;
+    private HealthManager cardCombat;
+    [HideInInspector] public int currentHealth;
+    [HideInInspector] public int maxHealth;
+    [HideInInspector] public bool isEnemy;
 
     [Header("Movement")]
     [SerializeField] private float moveSpeedLimit = 50;
 
     [Header("Selection")]
     public bool selected;
+    public bool canBeSelected;
     public float selectionOffset = 50;
     private float pointerDownTime;
     private float pointerUpTime;
+    private Selectable selectable;
 
     [Header("Visual")]
     [SerializeField] private GameObject cardVisualPrefab;
@@ -48,6 +55,10 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     {
         canvas = GetComponentInParent<Canvas>();
         imageComponent = GetComponent<Image>();
+        selectable = GetComponent<Selectable>();
+        cardCombat = GetComponent<HealthManager>();
+
+        CardSelectable(false);
 
         if (!instantiateVisual)
             return;
@@ -55,6 +66,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         visualHandler = FindAnyObjectByType<VisualCardsHandler>();
         cardVisual = Instantiate(cardVisualPrefab, visualHandler ? visualHandler.transform : canvas.transform).GetComponent<CardVisual>();
         cardVisual.Initialize(this);
+
+        InitialiseHealth();
+
     }
 
     void Update()
@@ -71,8 +85,6 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     }
 
 
-
-
     void ClampPosition()
     {
         Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
@@ -84,6 +96,9 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+
+        if (!canBeSelected) return;
+
         BeginDragEvent.Invoke(this);
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         offset = mousePosition - (Vector2)transform.position;
@@ -116,6 +131,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!canBeSelected) return;
+
         PointerEnterEvent.Invoke(this);
         isHovering = true;
     }
@@ -129,6 +146,8 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if(!canBeSelected) return;
+
         if (eventData.button != PointerEventData.InputButton.Left)
             return;
 
@@ -138,6 +157,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void OnPointerUp(PointerEventData eventData)
     {
+
         if (eventData.button != PointerEventData.InputButton.Left)
             return;
 
@@ -172,6 +192,16 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         }
     }
 
+    public void InitialiseHealth()
+    {
+        cardCombat = GetComponent<HealthManager>();
+        if(cardCombat != null)
+        {
+            cardCombat.InitialiseHealthSlider();
+        }
+        else { Debug.Log("Skibidi"); }
+    }
+
 
     public int SiblingAmount()
     {
@@ -194,6 +224,11 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
             Destroy(cardVisual.gameObject);
     }
 
-
+    public void CardSelectable(bool canSelect)
+    {
+        canBeSelected = canSelect;
+        if(selectable != null)
+            selectable.interactable = canSelect;
+    }
 
 }
