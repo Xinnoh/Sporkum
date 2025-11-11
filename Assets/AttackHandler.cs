@@ -13,6 +13,7 @@ public class AttackHandler : MonoBehaviour
     private HorizontalCardHolder charHolder, moveHolder, diceHolder, otherCharHolder;
 
     private int currentIndex;
+    private int currentAttackIndex;
 
     private bool initialised;
 
@@ -48,23 +49,22 @@ public class AttackHandler : MonoBehaviour
     {
         if(!initialised) yield break;
 
-        dice = diceHolder.cards[currentIndex].GetComponent<Dice>();
 
-        if (dice == null || characterData == null)
+        if (characterData == null)
             yield break;
 
-        int roll = dice.currDiceVal;
-        MoveData move = GetMoveByRoll(roll);
+
+        MoveData move = GetMoveByRoll(currentAttackIndex);
         if (move == null)
             yield break;
 
         if (card.isEnemy)
         {
-            Debug.Log($"Enemy {characterData.characterName} rolled {roll} and used {move.moveName}");
+            Debug.Log($"Enemy {characterData.characterName} in slot {card.ParentIndex() + 1} used {move.moveName} from move {currentAttackIndex}"); 
         }
         else
         {
-            Debug.Log($"Player's {characterData.characterName} rolled {roll} and used {move.moveName}");
+            Debug.Log($"Player's {characterData.characterName} in slot {card.ParentIndex() + 1} used {move.moveName} from move {currentAttackIndex}");
         }
 
 
@@ -97,6 +97,11 @@ public class AttackHandler : MonoBehaviour
         {
             Debug.LogWarning($"{move.moveName} has no MoveEffect assigned!");
         }
+    }
+
+    public void UpdateAttackIndex(int newIndex)
+    {
+        currentAttackIndex = newIndex;
     }
 
 }

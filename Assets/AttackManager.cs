@@ -6,8 +6,10 @@ public class AttackManager : MonoBehaviour
 {
     private HorizontalCardHolder playerHolder, enemyHolder;
 
+
     public CombatManager combatManager;
 
+    private bool isPlayerTurn;
 
     void Start()
     {
@@ -18,29 +20,44 @@ public class AttackManager : MonoBehaviour
 
     private IEnumerator AttackPhase(HorizontalCardHolder holder, string nextPhaseDebug)
     {
+        // Sort the cards into turn order, then execute them
+        List<Card> attackOrder = new List<Card>();
+
         foreach (var card in holder.cards)
         {
-            if (card == null) continue;
-            var attackHandler = card.attackHandler;
-            if (attackHandler == null) continue;
+            if (card != null && card.attackHandler != null)
+                attackOrder.Add(card);
+        }
 
-            yield return StartCoroutine(attackHandler.PerformAttack());
+        attackOrder.Sort((a, b) =>
+        isPlayerTurn
+            ? b.ParentIndex().CompareTo(a.ParentIndex())  // player: right to left
+            : a.ParentIndex().CompareTo(b.ParentIndex())  // enemy: left to right
+    );
 
-            if (IsBattleOver()) yield break;
 
-            yield return new WaitForSeconds(.3f);
+        foreach (var card in attackOrder)
+        {
+            yield return StartCoroutine(card.attackHandler.PerformAttack());
+
+            if (IsBattleOver())
+                yield break;
+
+            yield return new WaitForSeconds(0.3f);
         }
 
     }
 
     public IEnumerator PlayerAttackPhase()
     {
+        isPlayerTurn = true;
         yield return AttackPhase(playerHolder, "Player attacks done Å® Enemy turn");
         combatManager.SetCombatState(CombatState.EnemyAnim);
     }
 
     public IEnumerator EnemyAttackPhase()
     {
+        isPlayerTurn = false;
         yield return AttackPhase(enemyHolder, "Enemy attacks done Å® Back to player");
         combatManager.SetCombatState(CombatState.PlayerTurn);
     }

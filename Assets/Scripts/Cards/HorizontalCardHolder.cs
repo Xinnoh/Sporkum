@@ -129,6 +129,8 @@ public class HorizontalCardHolder : MonoBehaviour
                 if (diceScript == null) continue;
 
                 card.cardVisual.UpdateAttack(diceScript.currDiceVal);
+                otherHolder.cards[i].attackHandler.UpdateAttackIndex(diceScript.currDiceVal);
+                
             }
         }
 
