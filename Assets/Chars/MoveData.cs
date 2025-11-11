@@ -11,18 +11,28 @@ public class MoveData : ScriptableObject
     [TextArea] public string description;
 
     public int power;
-    public MoveTarget targetType;
     public AnimationClip animation;
 
     public float hitDelay, endDelay;
 
-    public MoveEffect moveEffect;
+    public MoveTarget targetType;
+
     public enum MoveTarget
     {
         SingleEnemy,
         AllEnemies,
         Self,
         AllAllies,
-        Other
+        SpecialTarget
     }
+
+    public EffectType effectType;
+    public enum EffectType
+    {
+        Damage,
+        Heal,
+        Buff,
+        Debuff
+    }
+    public MoveEffect moveEffect;
 }

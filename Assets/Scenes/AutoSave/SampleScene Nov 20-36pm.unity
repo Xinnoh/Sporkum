@@ -3053,10 +3053,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCharacterHolder: {fileID: 1859521596}
-  enemyCharacterHolder: {fileID: 479261557}
-  playerMoveHolder: {fileID: 1622237520}
-  enemyMoveHolder: {fileID: 713883317}
-  playerDiceHolder: {fileID: 1819899133}
+  enemyCharacterHolder: {fileID: 1622237520}
+  playerMoveHolder: {fileID: 1819899133}
+  enemyMoveHolder: {fileID: 479261557}
+  playerDiceHolder: {fileID: 713883317}
   enemyDiceHolder: {fileID: 1673648542}
   playerHolders:
   - {fileID: 1859521596}

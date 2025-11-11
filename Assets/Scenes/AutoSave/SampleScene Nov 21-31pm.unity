@@ -1381,7 +1381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   party: {fileID: 11400000, guid: c533b11a0c0d0c44aaa645b9e4df9c68, type: 2}
-  isEnemy: 0
+  isEnemy: 1
 --- !u!4 &470972041
 Transform:
   m_ObjectHideFlags: 0

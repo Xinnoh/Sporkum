@@ -58,7 +58,15 @@ public class AttackHandler : MonoBehaviour
         if (move == null)
             yield break;
 
-        Debug.Log($"{characterData.characterName} rolled {roll} and used {move.moveName}");
+        if (card.isEnemy)
+        {
+            Debug.Log($"Enemy {characterData.characterName} rolled {roll} and used {move.moveName}");
+        }
+        else
+        {
+            Debug.Log($"Player's {characterData.characterName} rolled {roll} and used {move.moveName}");
+        }
+
 
         if (animator != null)
             animator.Play(move.animation.name);
@@ -68,6 +76,8 @@ public class AttackHandler : MonoBehaviour
         ApplyMoveEffect(move);
 
         yield return new WaitForSeconds(move.endDelay);
+
+        yield return new WaitForSeconds(1f);
     }
 
     MoveData GetMoveByRoll(int roll)

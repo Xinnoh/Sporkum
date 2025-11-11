@@ -28,21 +28,21 @@ public class AttackManager : MonoBehaviour
 
             if (IsBattleOver()) yield break;
 
-            Debug.Log("Attack:");
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(.3f);
         }
 
-        Debug.Log(nextPhaseDebug);
     }
 
     public IEnumerator PlayerAttackPhase()
     {
         yield return AttackPhase(playerHolder, "Player attacks done Å® Enemy turn");
+        combatManager.SetCombatState(CombatState.EnemyAnim);
     }
 
     public IEnumerator EnemyAttackPhase()
     {
         yield return AttackPhase(enemyHolder, "Enemy attacks done Å® Back to player");
+        combatManager.SetCombatState(CombatState.PlayerTurn);
     }
     bool IsBattleOver()
     {

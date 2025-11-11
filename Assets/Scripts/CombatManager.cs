@@ -74,16 +74,15 @@ public class CombatManager : MonoBehaviour
     {
         combatState = CombatState.Intro;
         SetTurnActive(false);
-        Debug.Log("Combat Intro started.A");
+        Debug.Log("Combat Intro started.");
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
 
 
         // yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.A) || requestedState.HasValue);
 
         TryApplyRequestedState();
 
-        Debug.Log("Combat Intro finished.");
         combatState = CombatState.PlayerTurn;
     }
 
@@ -92,13 +91,12 @@ public class CombatManager : MonoBehaviour
         combatState = CombatState.PlayerTurn;
         SetTurnActive(true);
 
-        Debug.Log("Player Turn started. Cards active.S");
+        Debug.Log("Player Turn started.");
 
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.S) || requestedState.HasValue);
+        yield return new WaitUntil(() => requestedState.HasValue);
 
         TryApplyRequestedState();
 
-        Debug.Log("Player Turn ended.");
         canSelectCards = false;
     }
 
@@ -107,7 +105,7 @@ public class CombatManager : MonoBehaviour
         combatState = CombatState.PlayerAnim;
         SetTurnActive(false);
 
-        Debug.Log("Player Animations playing.D");
+        Debug.Log("Player Animations playing.");
 
         yield return StartCoroutine(attackManager.PlayerAttackPhase());
 
@@ -122,7 +120,9 @@ public class CombatManager : MonoBehaviour
     {
         combatState = CombatState.EnemyAnim;
 
-        Debug.Log("Enemy Animations playing.F");
+        Debug.Log("Enemy Animations playing.");
+
+        yield return StartCoroutine(attackManager.EnemyAttackPhase());
 
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.F) || requestedState.HasValue);
 

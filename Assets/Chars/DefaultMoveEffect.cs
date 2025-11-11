@@ -1,35 +1,75 @@
-using UnityEngine;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Character/MoveEffect/Default")]
 public class DefaultMoveEffect : MoveEffect
 {
     public override void Apply(Card userCard, HorizontalCardHolder charHolder, HorizontalCardHolder otherCharHolder, MoveData move)
     {
-        if (move.targetType == MoveData.MoveTarget.SingleEnemy)
-        {
-            Card target = userCard.isEnemy
-                ? otherCharHolder.cards.Where(c => c != null).OrderByDescending(c => c.ParentIndex()).FirstOrDefault()
-                : otherCharHolder.cards.Where(c => c != null).OrderBy(c => c.ParentIndex()).FirstOrDefault();
+        var targets = GetTargets(userCard, charHolder, otherCharHolder, move);
 
-            if (target != null)
-                target.GetComponent<HealthManager>()?.TakeDamage(move.power);
-        }
-        else if (move.targetType == MoveData.MoveTarget.AllEnemies)
+        foreach (var target in targets)
+            ApplyEffect(userCard, target, move);
+    }
+
+    private List<Card> GetTargets(Card userCard, HorizontalCardHolder charHolder, HorizontalCardHolder otherCharHolder, MoveData move)
+    {
+        var targets = new List<Card>();
+
+        switch (move.targetType)
         {
-            foreach (var c in otherCharHolder.cards)
-                c?.GetComponent<HealthManager>()?.TakeDamage(move.power);
-        }
-        else if (move.targetType == MoveData.MoveTarget.AllAllies)
-        {
-            foreach (var c in charHolder.cards)
-                c?.GetComponent<HealthManager>()?.TakeDamage(move.power);
-        }
-        else if (move.targetType == MoveData.MoveTarget.Self)
-        {
-            userCard.GetComponent<HealthManager>()?.TakeDamage(move.power);
+            case MoveData.MoveTarget.SingleEnemy:
+                var validTargets = otherCharHolder.cards.Where(c => c != null);
+                Card singleTarget = userCard.isEnemy
+                    ? validTargets.OrderByDescending(c => c.ParentIndex()).FirstOrDefault()
+                    : validTargets.OrderBy(c => c.ParentIndex()).FirstOrDefault();
+
+                if (singleTarget != null)
+                    targets.Add(singleTarget);
+                break;
+
+            case MoveData.MoveTarget.AllEnemies:
+                targets.AddRange(otherCharHolder.cards.Where(c => c != null));
+                break;
+
+            case MoveData.MoveTarget.AllAllies:
+                targets.AddRange(charHolder.cards.Where(c => c != null));
+                break;
+
+            case MoveData.MoveTarget.Self:
+                targets.Add(userCard);
+                break;
         }
 
-        Debug.Log($"{move.moveName} applied for {move.power} damage");
+        return targets;
+    }
+
+    private void ApplyEffect(Card userCard, Card target, MoveData move)
+    {
+        // this is where you define what the move *does*
+        var health = target.GetComponent<HealthManager>();
+
+        switch (move.effectType)
+        {
+            case MoveData.EffectType.Damage:
+                health?.TakeDamage(move.power);
+                break;
+
+            case MoveData.EffectType.Heal:
+                health?.Heal(move.power);
+                break;
+
+            case MoveData.EffectType.Buff:
+                //target.GetComponent<StatusManager>()?.ApplyBuff(move);
+                break;
+
+            case MoveData.EffectType.Debuff:
+                //target.GetComponent<StatusManager>()?.ApplyDebuff(move);
+                break;
+
+        }
+
+        Debug.Log($"{move.moveName} applied {move.effectType} ({move.power}) to {target.name}");
     }
 }
