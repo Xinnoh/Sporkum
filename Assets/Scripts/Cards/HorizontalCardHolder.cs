@@ -28,6 +28,8 @@ public class HorizontalCardHolder : MonoBehaviour
     public PartyManager partyManager;
     private PartyMembers partyMembersObject;
     private bool isEnemy;
+    [HideInInspector] public List<CharacterData> reserveCharacters = new List<CharacterData>();
+
 
     private bool canSelectCards;
 
@@ -46,12 +48,22 @@ public class HorizontalCardHolder : MonoBehaviour
             partyMembersObject = partyManager.party;
 
             isEnemy = partyManager.isEnemy;
-            cardsToSpawn = partyMembersObject.members.Length;
+
+            // Spawn 4 if player, 3 if enemy
+            int maxSpawn = isEnemy ? 3 : 4;
+            cardsToSpawn = Mathf.Min(maxSpawn, partyMembersObject.members.Length);
+
+            // If party > max, store for later
+            reserveCharacters.Clear();
+            for (int i = maxSpawn; i < partyMembersObject.members.Length; i++)
+            {
+                reserveCharacters.Add(partyMembersObject.members[i]);
+            }
+
         }
 
         for (int i = 0; i < cardsToSpawn; i++)
         {
-
             GameObject slot = Instantiate(slotPrefab, transform);
             CharacterData currentCharacter = partyMembersObject.members[i];
 
@@ -322,4 +334,5 @@ public class HorizontalCardHolder : MonoBehaviour
     {
         return otherHolder;
     }
+
 }

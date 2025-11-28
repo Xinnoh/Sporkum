@@ -52,26 +52,32 @@ public class AttackManager : MonoBehaviour
     {
         isPlayerTurn = true;
         yield return AttackPhase(playerHolder, "Player attacks done Å® Enemy turn");
-        combatManager.SetCombatState(CombatState.EnemyAnim);
+        if(!combatManager.combatOver)
+            combatManager.SetCombatState(CombatState.EnemyAnim);
     }
 
     public IEnumerator EnemyAttackPhase()
     {
         isPlayerTurn = false;
         yield return AttackPhase(enemyHolder, "Enemy attacks done Å® Back to player");
-        combatManager.SetCombatState(CombatState.PlayerTurn);
+        if(!combatManager.combatOver)
+            combatManager.SetCombatState(CombatState.PlayerTurn);
     }
     bool IsBattleOver()
     {
         if (AllDead(playerHolder))
         {
             combatManager.SetStateLose();
+            combatManager.combatOver = true;
+            Debug.Log("Players Dead");
             return true;
         }
 
         if (AllDead(enemyHolder))
         {
             combatManager.SetStateWin();
+            combatManager.combatOver = true;
+            Debug.Log("Enemies Dead");
             return true;
         }
 
@@ -86,7 +92,7 @@ public class AttackManager : MonoBehaviour
         {
             if (card == null) continue;
 
-            var health = card.GetComponent<HealthManager>();
+            var health = card.GetComponent<HealthHandler>();
             if (health != null && health.IsAlive())
                 return false;
         }

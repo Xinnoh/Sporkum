@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthManager : MonoBehaviour
+public class HealthHandler : MonoBehaviour
 {
     private Slider hpSlider;
     private int maxHealth;
@@ -20,11 +21,11 @@ public class HealthManager : MonoBehaviour
     private CombatManager combatManager;
     private bool isEnemy;
 
+    private HorizontalCardHolder holderParent;
 
     void Start()
     {
         combatManager = GameObject.FindWithTag("CombatManager").GetComponent<CombatManager>();
-
     }
 
     void Update()
@@ -35,11 +36,6 @@ public class HealthManager : MonoBehaviour
         {
             currentHealth += -1;
             UpdateHealthSlider();
-        }
-
-        if(currentHealth <= 0)
-        {
-
         }
     }
 
@@ -65,16 +61,45 @@ public class HealthManager : MonoBehaviour
         UpdateHealthSlider();
     }
 
-
     public void Kill()
     {
+        holderParent = GetComponentInParent<HorizontalCardHolder>();
+        if (holderParent == null || card == null) return;
 
+        RemoveSelfFromHolders();
     }
 
-    public bool IsAlive()
+    private void RemoveSelfFromHolders()
     {
-        return currentHealth > 0;
+        var index = card.ParentIndex();
+
+        var otherHolder = holderParent.GetOtherHolder();
+        if (otherHolder != null)
+        {
+            var other = otherHolder.cards.FirstOrDefault(c => c.ParentIndex() == index);
+            if (other != null)
+            {
+                Destroy(other.transform.parent.gameObject);
+                otherHolder.cards.Remove(other);
+            }
+        }
+
+        var diceHolder = holderParent.GetDiceHolder();
+        if (diceHolder != null)
+        {
+            var otherDice = diceHolder.cards.FirstOrDefault(c => c.ParentIndex() == index);
+            if (otherDice != null)
+            {
+                Destroy(otherDice.transform.parent.gameObject);
+                diceHolder.cards.Remove(otherDice);
+            }
+        }
+
+
+        Destroy(card.transform.parent.gameObject);
+        holderParent.cards.Remove(card);
     }
+
 
     public void InitialiseHealthSlider()
     {
@@ -108,4 +133,16 @@ public class HealthManager : MonoBehaviour
         hpSlider.value = currentHealth;
         initialised = true;
     }
+
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public bool IsAlive()
+    {
+        return currentHealth > 0;
+    }
+
 }

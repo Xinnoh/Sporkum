@@ -18,7 +18,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
     [Header("Data")]
     public CharacterData characterData;
     public GroupType groupType;
-    private HealthManager cardCombat;
+    private HealthHandler cardCombat;
     [HideInInspector] public int currentHealth;
     [HideInInspector] public int maxHealth;
     [HideInInspector] public bool isEnemy;
@@ -57,7 +57,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
         canvas = GetComponentInParent<Canvas>();
         imageComponent = GetComponent<Image>();
         selectable = GetComponent<Selectable>();
-        cardCombat = GetComponent<HealthManager>();
+        cardCombat = GetComponent<HealthHandler>();
         attackHandler = GetComponent<AttackHandler>();
 
         CardSelectable(false);
@@ -202,7 +202,7 @@ public class Card : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHand
 
     public void InitialiseHealth()
     {
-        cardCombat = GetComponent<HealthManager>();
+        cardCombat = GetComponent<HealthHandler>();
 
         if(cardCombat != null)
         {

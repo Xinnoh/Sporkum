@@ -16,7 +16,7 @@ MonoBehaviour:
   description: bad gy
   sprite: {fileID: 21300000, guid: b0f7ece065775c54497eff64f7d5df86, type: 3}
   flipSprite: 0
-  startingMaxHP: 7
+  startingMaxHP: 3
   startingAttack: 2
   moveDatas:
   - {fileID: 11400000, guid: 08a02f03d2cf59b498d88f0fb63edf7c, type: 2}

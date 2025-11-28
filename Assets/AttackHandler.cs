@@ -71,6 +71,8 @@ public class AttackHandler : MonoBehaviour
         if (animator != null)
             animator.Play(move.animation.name);
 
+
+
         yield return new WaitForSeconds(move.hitDelay);
 
         ApplyMoveEffect(move);

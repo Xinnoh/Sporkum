@@ -6,7 +6,7 @@ public class DiceManager : MonoBehaviour
 {
 
 
-    private HorizontalCardHolder playerHolder, enemyHolder, playerMoves, enemyMoves;
+    private HorizontalCardHolder playerHolder, enemyHolder, playerMoves, enemyMoves, playerDice, enemyDice;
 
 
 
@@ -16,6 +16,8 @@ public class DiceManager : MonoBehaviour
         enemyHolder = CardHolderRegistry.Instance.enemyCharacterHolder;
         playerMoves = CardHolderRegistry.Instance.playerMoveHolder;
         enemyMoves = CardHolderRegistry.Instance.enemyMoveHolder;
+        playerDice = CardHolderRegistry.Instance.playerDiceHolder;
+        enemyDice = CardHolderRegistry.Instance.enemyDiceHolder;
     }
 
     private void Update()
@@ -31,12 +33,12 @@ public class DiceManager : MonoBehaviour
 
     public void RerollPlayerDice()
     {
-        RerollDiceInHolder(playerHolder);
+        RerollDiceInHolder(playerDice);
     }
 
     public void RerollEnemyDice()
     {
-        RerollDiceInHolder(enemyHolder);
+        RerollDiceInHolder(enemyDice);
     }
 
     private void RerollDiceInHolder(HorizontalCardHolder holder)

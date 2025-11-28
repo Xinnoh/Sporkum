@@ -48,7 +48,7 @@ public class DefaultMoveEffect : MoveEffect
     private void ApplyEffect(Card userCard, Card target, MoveData move)
     {
         // this is where you define what the move *does*
-        var health = target.GetComponent<HealthManager>();
+        var health = target.GetComponent<HealthHandler>();
 
         switch (move.effectType)
         {

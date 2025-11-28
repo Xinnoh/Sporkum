@@ -6,7 +6,7 @@ public class Dice : MonoBehaviour
 {
 
     private int minDiceVal = 1;
-    private int maxDiceVal = 6;
+    private int maxDiceVal = 4;
 
     private Card card;
     public Sprite[] diceSprites;
@@ -41,7 +41,7 @@ public class Dice : MonoBehaviour
         else
         {
             Debug.LogWarning("No move found");
-            maxDiceVal = 10;
+            maxDiceVal = 4;
         }
 
         RerollValue();

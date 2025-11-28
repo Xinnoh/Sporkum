@@ -9,9 +9,11 @@ public class CombatManager : MonoBehaviour
     private HorizontalCardHolder[] playerCardHolders, enemyCardHolders;
     public AttackManager attackManager;
 
+
     public CombatState combatState;
     private bool canSelectCards = true;
 
+    public bool combatOver;
 
     private CombatState? requestedState = null;
 
@@ -43,6 +45,7 @@ public class CombatManager : MonoBehaviour
         foreach (var holder in enemyCardHolders)
             holder.StartCombat();
 
+        combatOver = false;
         combatState = CombatState.Intro;
         StartCoroutine(CombatFlow());
     }
@@ -63,7 +66,13 @@ public class CombatManager : MonoBehaviour
             }
 
             yield return StartCoroutine(PlayerAnim());
-            yield return StartCoroutine(EnemyAnim());
+
+            if (!CheckPlayerWin())
+            {
+                yield return StartCoroutine(EnemyAnim());
+
+
+            }
         }
 
         yield return StartCoroutine(CombatEnd());
@@ -109,7 +118,9 @@ public class CombatManager : MonoBehaviour
 
         yield return StartCoroutine(attackManager.PlayerAttackPhase());
 
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.D) || requestedState.HasValue);
+
+        yield return new WaitUntil(() => requestedState.HasValue);
+
 
         TryApplyRequestedState();
 
@@ -124,21 +135,27 @@ public class CombatManager : MonoBehaviour
 
         yield return StartCoroutine(attackManager.EnemyAttackPhase());
 
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.F) || requestedState.HasValue);
-
-        TryApplyRequestedState();
+        yield return new WaitUntil(() => requestedState.HasValue);
 
         Debug.Log("Enemy Animations finished.");
 
+
         // Loop back if not win
-        if (!CheckPlayerWin() && !CheckPlayerLose())
-            combatState = CombatState.PlayerTurn;
+        if (!CheckPlayerWin() && !CheckEnemyWin())
+        {
+            diceManager.RerollEnemyDice();
+            diceManager.RerollPlayerDice();
+            SetCombatState(CombatState.PlayerTurn);
+        }
+
+        TryApplyRequestedState();
     }
 
     public void RequestCombatState(CombatState newState)
     {
         requestedState = newState;
     }
+
     bool TryApplyRequestedState()
     {
         if (requestedState.HasValue)
@@ -161,19 +178,43 @@ public class CombatManager : MonoBehaviour
             Debug.Log("Player Loses!G");
         }
 
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.G) || requestedState.HasValue);
+        yield return new WaitUntil(() => requestedState.HasValue);
 
         Debug.Log("Combat Ended.");
     }
 
     bool CheckPlayerWin()
     {
-        return false;
+        return CheckCombatOver(true);
     }
 
-    bool CheckPlayerLose()
+    bool CheckEnemyWin()
     {
-        return false;
+        return CheckCombatOver(false);
+    }
+
+    bool CheckCombatOver(bool isEnemy)
+    {
+        HorizontalCardHolder holderToCheck = isEnemy
+            ? enemyCardHolders[0]
+            : playerCardHolders[0];
+
+        if (holderToCheck.cards.Count == 0)
+            return true;
+
+        // If any card is alive, return false
+        foreach (var card in holderToCheck.cards)
+        {
+            if (card != null && card.GetComponent<HealthHandler>().IsAlive())
+                return false;
+        }
+
+        return true;
+    }
+
+    public void CheckWinCondition()
+    {
+
     }
 
     public void SetTurnActive(bool active)
