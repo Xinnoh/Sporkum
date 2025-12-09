@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 29fd8f881f9b1c1429f80af0cdea5f52, type: 3}
-  m_Name: Heal AOE
+  m_Name: M_Kick
   m_EditorClassIdentifier: 
-  moveName: Heal AOE
-  description: Zoop
+  moveName: Kick AOE
+  description: pow
   power: 1
   animation: {fileID: 0}
   hitDelay: 0
   endDelay: 0
-  targetType: 3
-  effectType: 1
+  targetType: 1
+  effectType: 0
   moveEffect: {fileID: 11400000, guid: 3ad9c199f3d065040a0fd16e30f99cba, type: 2}

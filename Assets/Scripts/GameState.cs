@@ -6,7 +6,11 @@ public enum GameStateType
     Menu,
     Roulette,
     Dungeon,
-    Combat
+    Combat,
+    Training,
+    Neutral,
+    Shop,
+    Sacrifice
 }
 
 public class GameStateManager : MonoBehaviour
